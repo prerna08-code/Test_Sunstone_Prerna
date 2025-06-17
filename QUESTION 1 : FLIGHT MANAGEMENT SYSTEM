@@ -1,0 +1,84 @@
+//question 1 is as below : 
+
+
+package projectttest;
+abstract class Flight {
+    protected String flightNumber;
+    protected String origin;
+    protected String destination;
+    protected double baseFare;
+    
+    public Flight(String flightNumber, String origin, String destination, double baseFare) {
+        this.flightNumber = flightNumber;
+        this.origin = origin;
+        this.destination = destination;
+        this.baseFare = baseFare;
+    }
+    
+    public abstract double calculateFare();
+    public void displayDetails() {
+        System.out.println("Flight Number: " + flightNumber);
+        System.out.println("Origin: " + origin);
+        System.out.println("Destination: " + destination);
+        System.out.println("Base Fare: " + baseFare);
+        System.out.println("Total Fare: " + calculateFare());
+
+    }
+
+}
+class DomesticFlight extends Flight {
+    private static final double DOMESTIC_TAX = 0.10; // 10%
+    public DomesticFlight(String flightNumber, String origin, String destination, double baseFare) {
+        super(flightNumber, origin, destination, baseFare);
+    }
+    @Override
+    
+    public double calculateFare() {
+        return baseFare + (baseFare * DOMESTIC_TAX);
+    }
+    
+    @Override
+    public void displayDetails() {
+        System.out.println(" Domestic Flight ");
+        super.displayDetails();
+    }
+}
+
+class InternationalFlight extends Flight {
+    private static final double INTERNATIONAL_TAX = 0.20; // 20%
+    private double immigrationFee;
+    public InternationalFlight(String flightNumber, String origin, String destination, double baseFare, double immigrationFee) {
+        super(flightNumber, origin, destination, baseFare);
+        this.immigrationFee = immigrationFee;
+    }
+
+    @Override
+    public double calculateFare() {
+        return baseFare + (baseFare * INTERNATIONAL_TAX) + immigrationFee;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("International Flight");
+        super.displayDetails();
+        System.out.println("Immigration Fee: " + immigrationFee);
+    }
+
+}
+public class Question_2 {
+	public static void main(String[] args) {
+		Flight[] flights = new Flight[4];
+        flights[0] = new DomesticFlight("ABC101", "Delhi", "Mumbai", 5000.00);
+        flights[1] = new InternationalFlight("MNO01", "Delhi", "London", 20000.98, 3000.67);
+        flights[2] = new DomesticFlight("BNO102", "Chennai", "Bangalore", 4000.78);
+        flights[3] = new InternationalFlight("IDK234", "Lahore", "Delhi", 23000.78, 2300.32);
+        double totalFare = 0;
+        for (Flight flight : flights) {
+            flight.displayDetails();
+            System.out.println();
+            totalFare += flight.calculateFare();
+        }
+        System.out.println("Total Fare of all flights: " + totalFare);
+    }	}
+
+
