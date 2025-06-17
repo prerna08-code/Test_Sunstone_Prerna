@@ -1,0 +1,87 @@
+//question number 2 is as below: 
+
+
+package projectttest;
+import Test.InvalidProductException;
+import Test.Product;
+
+
+class InvalidProductException extends Exception {
+public InvalidProductException(String message) {
+   super(message);
+}
+}
+
+
+class Product {
+private int productId;
+private String productName;
+private double price;
+private int quantity;
+
+
+public Product(int productId, String productName, double price, int quantity) throws InvalidProductException {
+   if (price < 0 || quantity < 0)
+       throw new InvalidProductException(" Price and quantity cannot be negative.");
+   this.productId = productId;
+   this.productName = productName;
+   this.price = price;
+   this.quantity = quantity;
+}
+
+
+public Product(int productId, String productName) {
+   this.productId = productId;
+   this.productName = productName;
+   this.price = 0;
+   this.quantity = 0;
+}
+
+public void addProduct(String name, double price) {
+   this.productName = name;
+   this.price = price;
+   this.quantity = 0;
+}
+
+public void addProduct(String name, double price, int quantity) {
+   this.productName = name;
+   this.price = price;
+   this.quantity = quantity;
+}
+
+public void addProduct(int id, String name, double price, int quantity) {
+   this.productId = id;
+   this.productName = name;
+   this.price = price;
+   this.quantity = quantity;
+}
+
+public void showDetails() {
+   System.out.println("Product ID will be : " + productId);
+   System.out.println("Name of teh product is : " + productName);
+   System.out.println("Price of teh product is : " + price);
+   System.out.println("Quantity kitni h : " + quantity);
+
+}
+}
+public class Question_1 {
+
+	public static void main(String[] args) {
+		   try {
+		         Product p1 = new Product(101, "Phone", 25000, 10);
+		         Product p2 = new Product(102, "Headphones");
+
+		         p1.showDetails();
+		         p2.addProduct("Headphones", 2000, 5);
+		         p2.showDetails();
+
+		         Product p3 = new Product(103, "Laptop", -50000, 1);
+		         p3.showDetails();
+
+		     } catch (InvalidProductException e) {
+		         System.out.println("Exception caught: " + e.getMessage());
+		     }
+		 }
+	}
+
+
